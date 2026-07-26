@@ -1,0 +1,22 @@
+# ~/.config/wallust/wallust.toml
+#
+# Color extraction settings. Tweak these to taste.
+backend = "full"
+color_space = "salience"
+palette = "dark16"       # "dark16", "light16", "dark", "light", "hardauto", "harddark", "hardlight"
+check_contrast = true
+fallback_generator = "complementary"
+
+# Every entry here writes one generated file. "waybar" is a template that
+# ships with wallust and outputs the palette as CSS custom properties
+# (@color0.. @color15, @background, @foreground, @cursor).
+[templates]
+waybar = { template = "waybar", dst = "~/.config/waybar/colors.css" }
+
+# Bonus: keep other tools in sync with the same wallpaper for free.
+# Comment out any you don't use, or add more from
+# https://codeberg.org/explosion-mental/wallust-templates
+# hyprland = { template = "hyprland", dst = "~/.config/hypr/colors.conf" }
+# rofi     = { template = "rofi",     dst = "~/.config/rofi/colors.rasi" }
+# swaync   = { template = "waybar",   dst = "~/.config/swaync/colors.css" }
+# kitty    = { template = "kitty",    dst = "~/.config/kitty/colors.conf" }
