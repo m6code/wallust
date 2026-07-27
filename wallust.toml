@@ -17,7 +17,7 @@ swaync = { template = "waybar", dst = "~/.config/swaync/colors.css" }
 kitty  = { template = "kitty",  dst = "~/.config/kitty/current-theme.conf" }
 nvim   = { template = "nvim",   dst = "~/.config/nvim/colors/wallust.lua" }
 vicinae = { template = "vicinae", dst = "~/.local/share/vicinae/themes/wallust.toml" }
-
+wlogout = { template = "wlogout", dst = "~/.config/wlogout/style.css" }
 
 # Bonus: keep other tools in sync with the same wallpaper for free.
 # Comment out any you don't use, or add more from
