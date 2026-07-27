@@ -1,0 +1,110 @@
+vim.cmd("hi clear")
+if vim.fn.exists("syntax_on") == 1 then
+  vim.cmd("syntax reset")
+end
+vim.o.background = "dark"
+vim.g.colors_name = "wallust"
+
+-- tiny helper — only used to derive dark, neutral UI surfaces from bg,
+-- since color8/color0 ("black"/"bright black") aren't guaranteed to
+-- actually be dark/neutral (on your last wallpaper bright_black was #AD8400)
+local function hex2rgb(hex)
+  hex = hex:gsub("#", "")
+  return tonumber(hex:sub(1, 2), 16), tonumber(hex:sub(3, 4), 16), tonumber(hex:sub(5, 6), 16)
+end
+local function rgb2hex(r, g, b)
+  return string.format("#%02x%02x%02x",
+    math.floor(math.min(255, math.max(0, r))),
+    math.floor(math.min(255, math.max(0, g))),
+    math.floor(math.min(255, math.max(0, b))))
+end
+local function lighten(hex, amt)
+  local r, g, b = hex2rgb(hex)
+  return rgb2hex(r + (255 - r) * amt, g + (255 - g) * amt, b + (255 - b) * amt)
+end
+
+local c = {
+  bg = "{{background}}",
+  fg = "{{foreground}}",
+  black          = "{{color0}}",
+  red            = "{{color1}}",
+  green          = "{{color2}}",
+  yellow         = "{{color3}}",
+  blue           = "{{color4}}",
+  magenta        = "{{color5}}",
+  cyan           = "{{color6}}",
+  white          = "{{color7}}",
+  bright_black   = "{{color8}}",
+  bright_red     = "{{color9}}",
+  bright_green   = "{{color10}}",
+  bright_yellow  = "{{color11}}",
+  bright_blue    = "{{color12}}",
+  bright_magenta = "{{color13}}",
+  bright_cyan    = "{{color14}}",
+  bright_white   = "{{color15}}",
+}
+
+-- UI surfaces derived from color0 ("black") rather than bg
+local surface0 = lighten(c.black, 0.05)  -- sidebar / panel bg
+local surface1 = lighten(c.black, 0.10)  -- floats, popups
+local surface2 = lighten(c.black, 0.16)  -- selection, borders
+local overlay  = lighten(c.black, 0.24)  -- cursorline
+
+local hl = vim.api.nvim_set_hl
+
+-- Editor UI
+hl(0, "Normal",       { fg = c.fg, bg = c.bg })
+hl(0, "NormalNC",     { fg = c.fg, bg = c.bg })
+hl(0, "NormalFloat",  { fg = c.fg, bg = surface1 })
+hl(0, "FloatBorder",  { fg = surface2, bg = surface1 })
+hl(0, "FloatTitle",   { fg = c.bright_blue, bg = surface1, bold = true })
+hl(0, "CursorLine",   { bg = overlay })
+hl(0, "CursorLineNr", { fg = c.bright_blue, bold = true })
+hl(0, "LineNr",       { fg = c.bright_black })
+hl(0, "Visual",       { bg = surface2 })
+hl(0, "Search",       { fg = c.bg, bg = c.yellow })
+hl(0, "IncSearch",    { fg = c.bg, bg = c.bright_yellow })
+hl(0, "Pmenu",        { fg = c.fg, bg = surface1 })
+hl(0, "PmenuSel",     { fg = c.bg, bg = c.bright_blue })
+hl(0, "StatusLine",   { fg = c.fg, bg = surface0 })
+hl(0, "StatusLineNC", { fg = c.bright_black, bg = surface0 })
+hl(0, "WinSeparator", { fg = surface2 })
+hl(0, "SignColumn",   { bg = c.bg })
+hl(0, "ColorColumn",  { bg = overlay })
+hl(0, "MatchParen",   { fg = c.bright_magenta, bold = true, underline = true })
+
+-- File explorer / sidebar (Neo-tree, Snacks explorer, nvim-tree)
+for _, prefix in ipairs({ "NeoTree", "Snacks", "NvimTree" }) do
+  hl(0, prefix .. "Normal",       { fg = c.fg, bg = surface0 })
+  hl(0, prefix .. "NormalNC",     { fg = c.fg, bg = surface0 })
+  hl(0, prefix .. "EndOfBuffer",  { fg = surface0, bg = surface0 })
+  hl(0, prefix .. "WinSeparator", { fg = surface2, bg = surface0 })
+end
+hl(0, "NeoTreeRootName", { fg = c.bright_blue, bold = true })
+
+-- Syntax — back to fully wallust-driven, as in your original version
+hl(0, "Comment",    { fg = c.bright_black, italic = true })
+hl(0, "Constant",   { fg = c.bright_magenta })
+hl(0, "String",     { fg = c.green })
+hl(0, "Character",  { fg = c.green })
+hl(0, "Number",     { fg = c.bright_magenta })
+hl(0, "Boolean",    { fg = c.bright_magenta })
+hl(0, "Identifier", { fg = c.bright_cyan })
+hl(0, "Function",   { fg = c.bright_blue, bold = true })
+hl(0, "Statement",  { fg = c.red, bold = true })
+hl(0, "Keyword",    { fg = c.red })
+hl(0, "PreProc",    { fg = c.bright_yellow })
+hl(0, "Type",       { fg = c.yellow })
+hl(0, "Special",    { fg = c.cyan })
+hl(0, "Underlined", { fg = c.blue, underline = true })
+hl(0, "Todo",       { fg = c.bg, bg = c.yellow, bold = true })
+hl(0, "Error",      { fg = c.red, bold = true })
+
+-- Diagnostics / diff — also back to wallust-driven
+hl(0, "DiagnosticError", { fg = c.red })
+hl(0, "DiagnosticWarn",  { fg = c.yellow })
+hl(0, "DiagnosticInfo",  { fg = c.blue })
+hl(0, "DiagnosticHint",  { fg = c.cyan })
+hl(0, "DiffAdd",    { fg = c.green,  bg = c.bg })
+hl(0, "DiffChange", { fg = c.yellow, bg = c.bg })
+hl(0, "DiffDelete", { fg = c.red,    bg = c.bg })
