@@ -14,6 +14,8 @@ saturation = 100 # <== previously blank # rages from 1 - 100
 [templates]
 waybar = { template = "waybar", dst = "~/.config/waybar/colors.css" }
 swaync = { template = "waybar", dst = "~/.config/swaync/colors.css" }
+kitty  = { template = "kitty",  dst = "~/.config/kitty/current-theme.conf" }
+
 
 # Bonus: keep other tools in sync with the same wallpaper for free.
 # Comment out any you don't use, or add more from
@@ -26,4 +28,4 @@ swaync = { template = "waybar", dst = "~/.config/swaync/colors.css" }
 [hooks]
 reload-waybar = "pkill -SIGUSR2 waybar"
 reload-swaync = "swaync-client -R && swaync-client -rs"
-
+reload-kitty  = "kill -SIGUSR1 $(pgrep -x kitty) 2>/dev/null || true"
