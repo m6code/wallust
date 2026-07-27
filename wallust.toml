@@ -1,17 +1,19 @@
 # ~/.config/wallust/wallust.toml
 #
 # Color extraction settings. Tweak these to taste.
-backend = "full"
+backend = "full" # <== wal 
 color_space = "salience"
-palette = "dark16"       # "dark16", "light16", "dark", "light", "hardauto", "harddark", "hardlight"
+palette = "saliencedark16"       # <== dark16 # "dark16", "light16", "dark", "light", "hardauto", "harddark", "hardlight"
 check_contrast = true
 fallback_generator = "complementary"
+saturation = 100 # <== previously blank # rages from 1 - 100
 
 # Every entry here writes one generated file. "waybar" is a template that
 # ships with wallust and outputs the palette as CSS custom properties
 # (@color0.. @color15, @background, @foreground, @cursor).
 [templates]
 waybar = { template = "waybar", dst = "~/.config/waybar/colors.css" }
+swaync = { template = "waybar", dst = "~/.config/swaync/colors.css" }
 
 # Bonus: keep other tools in sync with the same wallpaper for free.
 # Comment out any you don't use, or add more from
@@ -20,3 +22,8 @@ waybar = { template = "waybar", dst = "~/.config/waybar/colors.css" }
 # rofi     = { template = "rofi",     dst = "~/.config/rofi/colors.rasi" }
 # swaync   = { template = "waybar",   dst = "~/.config/swaync/colors.css" }
 # kitty    = { template = "kitty",    dst = "~/.config/kitty/colors.conf" }
+
+[hooks]
+reload-waybar = "pkill -SIGUSR2 waybar"
+reload-swaync = "swaync-client -R && swaync-client -rs"
+
