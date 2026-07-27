@@ -3,10 +3,10 @@
 # Color extraction settings. Tweak these to taste.
 backend = "full" # <== wal 
 color_space = "salience"
-palette = "saliencedark16"       # <== dark16 # "dark16", "light16", "dark", "light", "hardauto", "harddark", "hardlight"
+palette = "dark16"       # <== dark16 # "dark16", "light16"i, "dark", "light", "hardauto", "harddark", "hardlight"
 check_contrast = true
 fallback_generator = "complementary"
-saturation = 100 # <== previously blank # rages from 1 - 100
+saturation = 70 # <== previously blank # rages from 1 - 100
 
 # Every entry here writes one generated file. "waybar" is a template that
 # ships with wallust and outputs the palette as CSS custom properties
@@ -16,6 +16,8 @@ waybar = { template = "waybar", dst = "~/.config/waybar/colors.css" }
 swaync = { template = "waybar", dst = "~/.config/swaync/colors.css" }
 kitty  = { template = "kitty",  dst = "~/.config/kitty/current-theme.conf" }
 nvim   = { template = "nvim",   dst = "~/.config/nvim/colors/wallust.lua" }
+vicinae = { template = "vicinae", dst = "~/.local/share/vicinae/themes/wallust.toml" }
+
 
 # Bonus: keep other tools in sync with the same wallpaper for free.
 # Comment out any you don't use, or add more from
@@ -29,3 +31,4 @@ nvim   = { template = "nvim",   dst = "~/.config/nvim/colors/wallust.lua" }
 reload-waybar = "pkill -SIGUSR2 waybar"
 reload-swaync = "swaync-client -R && swaync-client -rs"
 reload-kitty  = "kill -SIGUSR1 $(pgrep -x kitty) 2>/dev/null || true"
+reload-vicinae = "killall -9 vicinae-server && vicinae server &"
