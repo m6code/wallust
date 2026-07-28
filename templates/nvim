@@ -44,11 +44,16 @@ local c = {
   bright_white   = "{{color15}}",
 }
 
+-- -- UI surfaces derived from color0 ("black") rather than bg
+-- local surface0 = lighten(c.black, 0.05)  -- sidebar / panel bg
+-- local surface1 = lighten(c.black, 0.10)  -- floats, popups
+-- local surface2 = lighten(c.black, 0.16)  -- selection, borders
+-- local overlay  = lighten(c.black, 0.24)  -- cursorline
 -- UI surfaces derived from color0 ("black") rather than bg
-local surface0 = lighten(c.black, 0.05)  -- sidebar / panel bg
-local surface1 = lighten(c.black, 0.10)  -- floats, popups
-local surface2 = lighten(c.black, 0.16)  -- selection, borders
-local overlay  = lighten(c.black, 0.24)  -- cursorline
+local surface0 = c.black -- sidebar / panel bg
+local surface1 = c.bg -- floats, popups
+local surface2 = c.black -- selection, borders
+local overlay = c.black -- cursorline
 
 local hl = vim.api.nvim_set_hl
 
