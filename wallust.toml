@@ -6,7 +6,7 @@ color_space = "salience"
 palette = "dark16"       # <== dark16 # "dark16", "light16"i, "dark", "light", "hardauto", "harddark", "hardlight"
 check_contrast = true
 fallback_generator = "complementary"
-# saturation = 70 # <== previously blank # rages from 1 - 100
+saturation = 60 # <== previously blank # rages from 1 - 100
 
 # Every entry here writes one generated file. "waybar" is a template that
 # ships with wallust and outputs the palette as CSS custom properties
@@ -28,7 +28,7 @@ wlogout = { template = "wlogout", dst = "~/.config/wlogout/style.css" }
 # kitty    = { template = "kitty",    dst = "~/.config/kitty/colors.conf" }
 
 [hooks]
-reload-waybar = "pkill -SIGUSR2 waybar"
+reload-waybar = "killall -9 waybar && waybar"
 reload-swaync = "swaync-client -R && swaync-client -rs"
 reload-kitty  = "kill -SIGUSR1 $(pgrep -x kitty) 2>/dev/null || true"
 reload-vicinae = "killall -9 vicinae-server && vicinae server &"
